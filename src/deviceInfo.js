@@ -13,7 +13,7 @@ class DeviceInfo {
       engine: ["WebKit", "Trident", "Gecko", "Presto"],
       browser: browserInfo,
       os: osInfo,
-      device: deviceInfo
+      device: deviceInfo,
     };
 
     /**
@@ -36,7 +36,7 @@ class DeviceInfo {
       engine: this.getEngine(),
       browser: this.getBrowser(),
       os: this.getOs(),
-      device: this.getDevice()
+      device: this.getDevice(),
     };
   };
 
@@ -65,7 +65,7 @@ class DeviceInfo {
    *
    * @memberof DeviceInfo
    */
-  getMatchMap = u => {
+  getMatchMap = (u) => {
     return {
       // 内核
       Trident: u.indexOf("Trident") > -1 || u.indexOf("NET CLR") > -1,
@@ -137,7 +137,7 @@ class DeviceInfo {
         u.indexOf("iPh") > -1 ||
         u.indexOf("480") > -1,
       Tablet: u.indexOf("Tablet") > -1 || u.indexOf("Nexus 7") > -1,
-      iPad: u.indexOf("iPad") > -1
+      iPad: u.indexOf("iPad") > -1,
     };
   };
 

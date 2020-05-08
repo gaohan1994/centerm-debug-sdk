@@ -9,10 +9,14 @@ const fs = require("fs");
  * ```
  */
 const appDir = fs.realpathSync(process.cwd());
-const getAppRelativePath = relativePath => path.resolve(appDir, relativePath);
+const getAppRelativePath = (relativePath) => path.resolve(appDir, relativePath);
 
 module.exports = {
   appEntry: getAppRelativePath("src/index.js"),
   appOutput: getAppRelativePath("dist"),
-  appSrc: getAppRelativePath("src")
+  appSrc: getAppRelativePath("src"),
+  clientEntry: getAppRelativePath("demo/index.js"),
+  clientOutput: getAppRelativePath("client"),
+  clientSrc: getAppRelativePath("demo"),
+  clientPublicPath: getAppRelativePath("demo/public"),
 };
