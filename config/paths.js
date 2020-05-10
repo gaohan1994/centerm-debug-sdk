@@ -16,7 +16,7 @@ module.exports = {
   appOutput: getAppRelativePath("dist"),
   appSrc: getAppRelativePath("src"),
   clientEntry: getAppRelativePath("demo/index.js"),
-  clientOutput: getAppRelativePath("client"),
+  clientOutput: getAppRelativePath("demo/public"),
   clientSrc: getAppRelativePath("demo"),
   clientPublicPath: getAppRelativePath("demo/public"),
 };

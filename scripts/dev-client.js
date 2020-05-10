@@ -4,17 +4,19 @@ const configFactory = require("../config/webpack.config.client");
 const webpackDevServerConfig = require("../config/webpackDevServer.config");
 
 const compiler = webpack(configFactory);
+// const devServer = new WebpackDevServer(compiler, {
+//   contentBase: "client",
+//   hot: true,
+//   filename: "bundle.js",
+//   publicPath: "/",
+//   stats: {
+//     colors: true,
+//   },
+// });
 const devServer = new WebpackDevServer(compiler, webpackDevServerConfig);
 
-devServer.listen(9999, "0.0.0.0", (error) => {
+devServer.listen(8888, "localhost", (error) => {
   if (error) {
     return console.log(error);
   }
-
-  ["SIGINT", "SIGTERM"].forEach(function (sig) {
-    process.on(sig, function () {
-      devServer.close();
-      process.exit();
-    });
-  });
 });
