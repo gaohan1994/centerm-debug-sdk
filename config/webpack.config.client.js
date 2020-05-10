@@ -17,7 +17,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|mjs|jsx|ts|tsx)$/,
-        include: paths.clientSrc,
+        // include: paths.clientSrc,
         loader: require.resolve("babel-loader"),
         options: {
           babelrc: true,

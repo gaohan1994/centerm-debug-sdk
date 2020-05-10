@@ -1,6 +1,15 @@
 import { browserInfo, osInfo, deviceInfo } from "./config";
 class DeviceInfo {
-  constructor() {
+  /**
+   *Creates an instance of DeviceInfo.
+   * @param {*} options
+   *
+   * @param {mode} development | production
+   * 当前debug工具的环境 默认production
+   *
+   * @memberof DeviceInfo
+   */
+  constructor(options) {
     /**
      * @param {navigator}
      * 初始化window.navigator 判断是否是浏览器环境
@@ -8,6 +17,8 @@ class DeviceInfo {
      * @param {infoMap}
      * 初始化引擎、浏览器、操作系统、设备信息
      */
+    const { mode } = options;
+    this.mode = mode || "production";
     this.navigator = (typeof window !== undefined && window.navigator) || {};
     this.infoMap = {
       engine: ["WebKit", "Trident", "Gecko", "Presto"],
@@ -31,14 +42,22 @@ class DeviceInfo {
     this.matchInfoMap();
   }
 
-  getDeviceInfo = () => {
+  getDeviceInfo() {
+    const engine = this.getEngine();
+    console.log("engine", engine);
+    const browser = this.getBrowser();
+    console.log("browser", browser);
+    const os = this.getOs();
+    console.log("os", os);
+    const device = this.getDevice();
+    console.log("device", device);
     return {
-      engine: this.getEngine(),
-      browser: this.getBrowser(),
-      os: this.getOs(),
-      device: this.getDevice(),
+      engine,
+      browser,
+      os,
+      device,
     };
-  };
+  }
 
   getEngine = () => {
     return this.engine;
@@ -54,6 +73,14 @@ class DeviceInfo {
 
   getDevice = () => {
     return this.device;
+  };
+
+  isDevlopment = () => {
+    return this.mode === "development";
+  };
+
+  isProduction = () => {
+    return this.mode === "production";
   };
 
   /**
@@ -163,9 +190,11 @@ class DeviceInfo {
           console.log("====================================");
           console.log("currentInfo", currentInfo);
           console.log("infoKey", infoKey);
+          console.log("match", match);
+          console.log("value", value);
           console.log("match[value]", match[value]);
           console.log("====================================");
-          this[infoKey] = match[value];
+          this[infoKey] = value;
         }
       }
     }
