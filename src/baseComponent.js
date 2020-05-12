@@ -26,7 +26,7 @@ class BaseComponent {
      * @param {url} string;
      * @todo 当前浏览器url
      */
-    this.url = window.location.href.split("?")[0].replace("#", "");
+    this.url = window.location.href;
     /**
      * @param {userId} string;
      * @todo 用户标识
@@ -39,8 +39,32 @@ class BaseComponent {
     this.pageKey = "";
   }
 
+  /**
+   * 获取 url
+   *
+   * @memberof BaseComponent
+   */
   getUrl = () => {
     return this.url;
+  };
+
+  /**
+   * 设置 url
+   *
+   * @memberof BaseComponent
+   */
+  setUrl = () => {
+    this.url = window.location.href;
+  };
+
+  uploadErrorInfo = async javascriptErrorInfo => {
+    const payload = {
+      deviceInfo: this.deviceInfo,
+      happenTime: this.happenTime,
+      appId: this.appId,
+      url: this.url,
+      javascriptErrorInfo
+    };
   };
 }
 

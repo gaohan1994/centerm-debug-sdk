@@ -178,4 +178,18 @@ const matchOsVersion = function(u) {
   return osVersion;
 };
 
-export { osInfo, deviceInfo, browserInfo, matchMap, matchOsVersion };
+/**
+ * 上传类型
+ */
+const uploadType = {
+  jsError: "JS_ERROR"
+};
+
+export {
+  osInfo,
+  deviceInfo,
+  browserInfo,
+  matchMap,
+  matchOsVersion,
+  uploadType
+};

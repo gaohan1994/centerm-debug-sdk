@@ -53,6 +53,8 @@ class DeviceInfo {
     this.orientationStatus;
     this.netWork;
     this.language;
+    this.ip;
+    this.city;
     this.init();
   }
 
@@ -74,6 +76,8 @@ class DeviceInfo {
     const orientationStatus = this.getOrientationStatus();
     const language = this.getLanguage();
     const userAgent = (this.navigator && this.navigator.userAgent) || {};
+    const city = this.city;
+    const ip = this.ip;
     return {
       engine,
       browser,
@@ -83,7 +87,9 @@ class DeviceInfo {
       netWork,
       orientationStatus,
       language,
-      userAgent
+      userAgent,
+      city,
+      ip
     };
   }
 
@@ -213,6 +219,46 @@ class DeviceInfo {
   };
 
   /**
+   * @todo 获取城市名称
+   *
+   * @memberof DeviceInfo
+   */
+  getCity = () => {
+    return this.city;
+  };
+
+  /**
+   * @todo 设置城市名称，使用sohu接口
+   *
+   * https://blog.csdn.net/zqian1994/article/details/79222812
+   *
+   * @memberof DeviceInfo
+   */
+  setCity = () => {
+    this.city = returnCitySN && returnCitySN.cname;
+  };
+
+  /**
+   * @todo 获取ip地址
+   *
+   * @memberof DeviceInfo
+   */
+  getIp = () => {
+    return this.ip;
+  };
+
+  /**
+   * @todo 设置用户ip，使用sohu接口
+   *
+   * https://blog.csdn.net/zqian1994/article/details/79222812
+   *
+   * @memberof DeviceInfo
+   */
+  setIp = () => {
+    this.ip = returnCitySN && returnCitySN.cip;
+  };
+
+  /**
    * @todo 初始化当前环境对应的数据
    *
    * @memberof DeviceInfo
@@ -227,6 +273,10 @@ class DeviceInfo {
     this.setNetWork();
 
     this.setLanguage();
+
+    this.setCity();
+
+    this.setIp();
   };
 }
 
