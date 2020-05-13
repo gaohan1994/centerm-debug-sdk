@@ -6,6 +6,9 @@ class JavascriptErrorInfo extends BaseComponent {
     const { uploadType, errorMessage, errorStack } = this.constructorError(
       options
     );
+    console.log("uploadType", uploadType);
+    console.log("errorMessage", errorMessage);
+    console.log("errorStack", errorStack);
     this.uploadType = uploadType;
     this.errorMessage = errorMessage;
     this.errorStack = errorStack;

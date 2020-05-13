@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 
 function Demo() {
-  useEffect(() => {
-    throw new Error("hello");
-  }, []);
+  // useEffect(() => {
+  //   throw new Error("hello");
+  // }, []);
 
-  return <div>demo</div>;
+  const throwErorr = () => {
+    throw new Error("click error");
+  };
+
+  return (
+    <div>
+      <button onClick={() => throwErorr()}>click error</button>
+    </div>
+  );
 }
 
 export default Demo;

@@ -5,6 +5,7 @@
   ],
   "plugins": [
     ["@babel/plugin-proposal-class-properties", { "loose": false }],
-    "transform-react-jsx"
+    "transform-react-jsx",
+    "@babel/plugin-transform-runtime"
   ]
 }

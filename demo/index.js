@@ -15,13 +15,13 @@ class App extends React.Component {
     const info = deviceInfo.getDeviceInfo();
     console.log("info", info);
 
-    window.onerror = function(message, source, lineno, colno, error) {
-      // console.log("message", message);
-      // console.log("source", source);
-      // console.log("lineno", lineno);
-      // console.log("colno", colno);
-      // console.log("error", error);
-    };
+    // window.onerror = function(message, source, lineno, colno, error) {
+    //   console.log("message", message);
+    //   console.log("source", source);
+    //   console.log("lineno", lineno);
+    //   console.log("colno", colno);
+    //   console.log("error", error);
+    // };
   }
 
   render() {

@@ -1,7 +1,7 @@
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const paths = require("./paths");
 
-module.exports = function (env = "development") {
+module.exports = function(env = "development") {
   const isProduction = env === "production";
   const isDevelopment = env === "development";
   return {
@@ -11,7 +11,7 @@ module.exports = function (env = "development") {
       path: paths.appOutput,
       filename: isDevelopment
         ? `bundle.${env}.[contenthash:8].js`
-        : "bundle.[contenthash:8].js",
+        : "bundle.[contenthash:8].js"
     },
     module: {
       rules: [
@@ -25,16 +25,16 @@ module.exports = function (env = "development") {
             compact: false,
             cacheDirectory: true,
             // See #6846 for context on why cacheCompression is disabled
-            cacheCompression: false,
+            cacheCompression: false
 
             // Babel sourcemaps are needed for debugging into node_modules
             // code.  Without the options below, debuggers like VSCode
             // show incorrect code and set breakpoints on the wrong lines.
             // sourceMaps: !!isDevelopment,
             // inputSourceMap: !!isDevelopment
-          },
-        },
-      ],
+          }
+        }
+      ]
     },
     plugins: [
       new UglifyJsPlugin(
@@ -42,19 +42,10 @@ module.exports = function (env = "development") {
           {},
           {
             sourceMap: !!isDevelopment,
-            parallel: !!isDevelopment,
-          },
-          !!isDevelopment
-            ? {
-                uglifyOptions: {
-                  compress: {
-                    warnings: false,
-                  },
-                },
-              }
-            : undefined
+            parallel: !!isDevelopment
+          }
         )
-      ),
-    ],
+      )
+    ]
   };
 };
