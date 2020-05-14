@@ -13,7 +13,6 @@ class App extends React.Component {
     const javascriptDebug = new JavascriptDebug();
 
     const info = deviceInfo.getDeviceInfo();
-    console.log("info", info);
 
     // window.onerror = function(message, source, lineno, colno, error) {
     //   console.log("message", message);

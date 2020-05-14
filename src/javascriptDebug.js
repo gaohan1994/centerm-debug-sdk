@@ -1,5 +1,7 @@
+import invariant from "invariant";
 import { JavascriptErrorInfo } from "./index";
-import { uploadType } from "./config";
+import { errorType as uploadType } from "./config";
+import storage from "./storage";
 
 class JavascriptDebug {
   constructor() {
@@ -8,7 +10,21 @@ class JavascriptDebug {
      * window.onerror 是否已经启用
      */
     this.jsMonitorStarted = false;
+    /**
+     * this.recordJavascriptError();
+     * 开启 javascriptDebug
+     */
     this.recordJavascriptError();
+    /**
+     * @param {Timer} timer
+     * 统计数据定时器
+     */
+    this.timer;
+    /**
+     * this.initErrorInfoTimer()
+     * 开启错误上报 计时器
+     */
+    // this.initErrorInfoTimer();
   }
 
   /**
@@ -36,28 +52,20 @@ class JavascriptDebug {
     columnNumber,
     errorStack
   ) => {
-    // console.log("errorMessage", errorMessage);
-    // console.log("source", source);
-    // console.log("linerNumber", linerNumber);
-    // console.log("columnNumber", columnNumber);
-    // console.log("errorStack", errorStack);
     let errorType = "";
     if (errorMessage && errorStack) {
       errorType = JSON.stringify(errorStack)
         .split(": ")[0]
         .replace('"', "");
     }
-    console.log("uploadType.jsError ", uploadType.jsError);
-    console.log(
-      "`${errorType}: ${errorMessage}` ",
-      `${errorType}: ${errorMessage}`
-    );
-    console.log("errorStack;", errorStack);
     const javascriptErrorInfo = new JavascriptErrorInfo(
       uploadType.jsError,
       `${errorType}: ${errorMessage}`,
       errorStack
     );
+
+    const uploadErrorInfo = javascriptErrorInfo.getUploadErrorInfo();
+    this.pushUploadErrorInfoList(uploadErrorInfo);
   };
   /**
    * 使用 window.onerror 来监控报错
@@ -111,6 +119,66 @@ class JavascriptDebug {
       const errorStack = error && error.stack;
       that.uploadMessage(event, source, lineno, colno, errorStack);
     };
+  };
+
+  /**
+   * 将 errorinfo 存入 localstorage 中
+   * @param {string} type 错误的类型
+   * @param {object} errorInfoPayload 准备上送报文的错误日志
+   *
+   * @memberof BaseComponent
+   */
+  pushUploadErrorInfoList = errorInfoPayload => {
+    storage.pushStorage(
+      errorInfoPayload.errorType || uploadType.jsError,
+      errorInfoPayload
+    );
+  };
+
+  /**
+   * 启动定时上报计时器
+   *
+   * @memberof BaseComponent
+   */
+  initErrorInfoTimer = () => {
+    /**
+     * @param {number} timeCount
+     */
+    let timeCount = 0;
+    this.timer = setInterval(() => {
+      /**
+       * 10秒钟进行一次数据的检查
+       */
+      if (timeCount >= 1000 * 3) {
+        const storageErrorInfo = storage.getStorageErrorData();
+        if (storageErrorInfo.length > 0) {
+          this.fetchErrorInfo(storageErrorInfo);
+        }
+        /**
+         * @param 重置计时器
+         */
+        timeCount = 0;
+      }
+      timeCount += 1000;
+    }, 1000);
+  };
+
+  fetchErrorInfo = errorInfoList => {
+    try {
+      console.log("要上报的错误日志", errorInfoList);
+      invariant(
+        errorInfoList && errorInfoList.length > 0,
+        "请传入要上报的错误日志"
+      );
+      fetch("", {
+        method: "POST",
+        body: { errorInfo: errorInfoList }
+      }).then(resposne => {
+        console.log("resposne: ", resposne);
+      });
+    } catch (error) {
+      console.warn(error.message);
+    }
   };
 }
 

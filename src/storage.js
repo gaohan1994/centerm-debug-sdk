@@ -1,12 +1,36 @@
-import { uploadType } from "./config";
+import { errorType } from "./config";
 class JavascriptErrorStorage {
   constructor() {
     /**
-     * 初始化 storage
+     * @param {string} baseErrorKey
+     * 错误日志使用 storage 的 base key
      */
     this.baseErrorKey = "CENTERM_";
+    /**
+     * @param {localStorage} storage
+     */
     this.storage = (window && window.localStorage) || {};
+    /**
+     * @param {function} init
+     * 初始化 storage 函数
+     */
+    this.init();
   }
+
+  /**
+   * 初始化 centerm error storage
+   *
+   * @memberof JavascriptErrorStorage
+   */
+  init = () => {
+    for (let key in errorType) {
+      const storageKey = this.getErrorStorageKey(errorType[key]);
+      const currentData = this.storage.getItem(storageKey);
+      if (!currentData) {
+        this.storage.setItem(storageKey, JSON.stringify([]));
+      }
+    }
+  };
 
   /**
    * 根据 error 类型生成不用的 key
@@ -79,9 +103,8 @@ class JavascriptErrorStorage {
    * @memberof JavascriptErrorStorage
    */
   clearStorage = () => {
-    for (let key of uploadType) {
-      console.log("key", key);
-      this.storage.setStorage(this.getErrorStorageKey(key), []);
+    for (let key of errorType) {
+      this.storage.setStorage(this.getErrorStorageKey(errorType[key]), []);
     }
   };
 
@@ -92,11 +115,8 @@ class JavascriptErrorStorage {
    */
   pushStorage = (type, errorInfo) => {
     const currentStorage = this.getStorage(type);
-    const newErrorArray = !!Array.isArray(errorInfo)
-      ? currentStorage.concat(errorInfo)
-      : currentStorage.push(errorInfo);
-
-    this.setStorage(type, newErrorArray);
+    currentStorage.push(errorInfo);
+    this.setStorage(type, currentStorage);
   };
 
   /**
@@ -105,17 +125,16 @@ class JavascriptErrorStorage {
    * @memberof JavascriptErrorStorage
    */
   getStorageErrorData = type => {
-    let data = {};
+    let data = [];
     if (!type) {
-      for (let key in uploadType) {
-        const currentData = this.getStorage(this.getErrorStorageKey(key));
-        data[key] = currentData;
+      for (let key in errorType) {
+        const currentData = this.getStorage(errorType[key]);
+        data = data.concat(currentData);
       }
-    } else {
-      const selectData = this.getStorage(this.getErrorStorageKey(type));
-      data[type] = selectData;
+      return data;
     }
-    return data;
+    const selectData = this.getStorage(this.getErrorStorageKey(type));
+    return selectData;
   };
 }
 

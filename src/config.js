@@ -181,15 +181,8 @@ const matchOsVersion = function(u) {
 /**
  * 上传类型
  */
-const uploadType = {
+const errorType = {
   jsError: "JS_ERROR"
 };
 
-export {
-  osInfo,
-  deviceInfo,
-  browserInfo,
-  matchMap,
-  matchOsVersion,
-  uploadType
-};
+export { osInfo, deviceInfo, browserInfo, matchMap, matchOsVersion, errorType };
