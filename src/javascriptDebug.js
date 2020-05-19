@@ -1,7 +1,7 @@
-import invariant from "invariant";
-import { JavascriptErrorInfo } from "./index";
-import { errorType as uploadType } from "./config";
-import storage from "./storage";
+import invariant from 'invariant';
+import { JavascriptErrorInfo } from './index';
+import { errorType as uploadType, netConfig } from './config';
+import storage from './storage';
 
 class JavascriptDebug {
   constructor() {
@@ -52,11 +52,11 @@ class JavascriptDebug {
     columnNumber,
     errorStack
   ) => {
-    let errorType = "";
+    let errorType = '';
     if (errorMessage && errorStack) {
       errorType = JSON.stringify(errorStack)
-        .split(": ")[0]
-        .replace('"', "");
+        .split(': ')[0]
+        .replace('"', '');
     }
     const javascriptErrorInfo = new JavascriptErrorInfo(
       uploadType.jsError,
@@ -85,13 +85,13 @@ class JavascriptDebug {
        * 如果错误message是string类型那么直接赋值，如果是对象则真正的信息在message中
        */
       const errorMessage =
-        typeof arguments[0] === "string" ? arguments[0] : arguments[0].message;
+        typeof arguments[0] === 'string' ? arguments[0] : arguments[0].message;
 
       /**
        * 如果错误message是string类型那么直接赋值，如果是对象则真正的信息在stack中
        */
       const errorStack =
-        typeof arguments[0] === "string" ? arguments[0] : arguments[0].stack;
+        typeof arguments[0] === 'string' ? arguments[0] : arguments[0].stack;
 
       /**
        * window.onerror 还没有启用重写 console.error
@@ -165,16 +165,23 @@ class JavascriptDebug {
 
   fetchErrorInfo = errorInfoList => {
     try {
-      console.log("要上报的错误日志", errorInfoList);
+      console.log('要上报的错误日志', errorInfoList);
       invariant(
         errorInfoList && errorInfoList.length > 0,
-        "请传入要上报的错误日志"
+        '请传入要上报的错误日志'
       );
-      fetch("", {
-        method: "POST",
-        body: { errorInfo: errorInfoList }
+      console.log('fetch', fetch);
+      // fetch(`${netConfig.requsetUrl}`, { method: 'get' });
+      fetch(`${netConfig.requsetUrl}/api/v1/upload`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ errorInfo: errorInfoList })
+        // body: JSON.stringify({ name: 'gaohan' })
       }).then(resposne => {
-        console.log("resposne: ", resposne);
+        console.log('resposne: ', resposne);
+        storage.clearStorage();
       });
     } catch (error) {
       console.warn(error.message);

@@ -1,11 +1,11 @@
-import { errorType } from "./config";
+import { errorType } from './config';
 class JavascriptErrorStorage {
   constructor() {
     /**
      * @param {string} baseErrorKey
      * 错误日志使用 storage 的 base key
      */
-    this.baseErrorKey = "CENTERM_";
+    this.baseErrorKey = 'CENTERM_';
     /**
      * @param {localStorage} storage
      */
@@ -47,7 +47,7 @@ class JavascriptErrorStorage {
    * @memberof JavascriptErrorStorage
    */
   getSaveValue = value => {
-    return typeof value === "string" ? value : JSON.stringify(value);
+    return typeof value === 'string' ? value : JSON.stringify(value);
   };
 
   /**
@@ -56,7 +56,7 @@ class JavascriptErrorStorage {
    * @memberof JavascriptErrorStorage
    */
   getReceiveValue = value => {
-    return typeof value === "string" ? JSON.parse(value) : value;
+    return typeof value === 'string' ? JSON.parse(value) : value;
   };
 
   /**
@@ -103,8 +103,8 @@ class JavascriptErrorStorage {
    * @memberof JavascriptErrorStorage
    */
   clearStorage = () => {
-    for (let key of errorType) {
-      this.storage.setStorage(this.getErrorStorageKey(errorType[key]), []);
+    for (let key in errorType) {
+      this.setStorage(errorType[key], []);
     }
   };
 

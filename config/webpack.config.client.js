@@ -1,11 +1,11 @@
-const paths = require("./paths");
+const paths = require('./paths');
 
 module.exports = {
-  mode: "development",
+  mode: 'development',
   entry: paths.clientEntry,
   output: {
     path: paths.clientOutput,
-    filename: "bundle.js",
+    filename: 'bundle.js'
   },
   // devServer: {
   //   port: 9999, //设置监听端口（默认的就是8080）
@@ -18,7 +18,7 @@ module.exports = {
       {
         test: /\.(js|mjs|jsx|ts|tsx)$/,
         // include: paths.clientSrc,
-        loader: require.resolve("babel-loader"),
+        loader: require.resolve('babel-loader'),
         options: {
           babelrc: true,
           configFile: false,
@@ -31,9 +31,25 @@ module.exports = {
           // code.  Without the options below, debuggers like VSCode
           // show incorrect code and set breakpoints on the wrong lines.
           sourceMaps: true,
-          inputSourceMap: true,
-        },
+          inputSourceMap: true
+        }
       },
-    ],
-  },
+      {
+        test: /\.(css)$/,
+        use: [
+          require.resolve('style-loader'),
+          {
+            loader: require.resolve('css-loader'),
+            options: {
+              importLoaders: 1
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(less)$/,
+        loader: require.resolve('less-loader')
+      }
+    ]
+  }
 };
