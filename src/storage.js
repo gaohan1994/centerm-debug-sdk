@@ -37,7 +37,7 @@ class JavascriptErrorStorage {
    *
    * @memberof JavascriptErrorStorage
    */
-  getErrorStorageKey = type => {
+  getErrorStorageKey = (type) => {
     return `${this.baseErrorKey}${type}`;
   };
 
@@ -46,7 +46,7 @@ class JavascriptErrorStorage {
    *
    * @memberof JavascriptErrorStorage
    */
-  getSaveValue = value => {
+  getSaveValue = (value) => {
     return typeof value === 'string' ? value : JSON.stringify(value);
   };
 
@@ -55,7 +55,7 @@ class JavascriptErrorStorage {
    *
    * @memberof JavascriptErrorStorage
    */
-  getReceiveValue = value => {
+  getReceiveValue = (value) => {
     return typeof value === 'string' ? JSON.parse(value) : value;
   };
 
@@ -92,7 +92,7 @@ class JavascriptErrorStorage {
    *
    * @memberof JavascriptErrorStorage
    */
-  getStorage = type => {
+  getStorage = (type) => {
     const value = this.storage.getItem(this.getErrorStorageKey(type));
     return !!value ? this.getReceiveValue(value) : [];
   };
@@ -124,7 +124,7 @@ class JavascriptErrorStorage {
    *
    * @memberof JavascriptErrorStorage
    */
-  getStorageErrorData = type => {
+  getStorageErrorData = (type) => {
     let data = [];
     if (!type) {
       for (let key in errorType) {

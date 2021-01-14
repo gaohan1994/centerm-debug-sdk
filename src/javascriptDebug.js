@@ -54,9 +54,7 @@ class JavascriptDebug {
   ) => {
     let errorType = '';
     if (errorMessage && errorStack) {
-      errorType = JSON.stringify(errorStack)
-        .split(': ')[0]
-        .replace('"', '');
+      errorType = JSON.stringify(errorStack).split(': ')[0].replace('"', '');
     }
     const javascriptErrorInfo = new JavascriptErrorInfo(
       uploadType.jsError,
@@ -80,7 +78,7 @@ class JavascriptDebug {
      */
     const olrConsoleError = console.error;
     const that = this;
-    console.error = function() {
+    console.error = function () {
       /**
        * 如果错误message是string类型那么直接赋值，如果是对象则真正的信息在message中
        */
@@ -111,7 +109,7 @@ class JavascriptDebug {
     /**
      * 监听 window.onerror
      */
-    window.onerror = function(event, source, lineno, colno, error) {
+    window.onerror = function (event, source, lineno, colno, error) {
       /**
        * 已经监听 window.onerror
        */
@@ -128,7 +126,7 @@ class JavascriptDebug {
    *
    * @memberof BaseComponent
    */
-  pushUploadErrorInfoList = errorInfoPayload => {
+  pushUploadErrorInfoList = (errorInfoPayload) => {
     storage.pushStorage(
       errorInfoPayload.errorType || uploadType.jsError,
       errorInfoPayload
@@ -163,23 +161,21 @@ class JavascriptDebug {
     }, 1000);
   };
 
-  fetchErrorInfo = errorInfoList => {
+  fetchErrorInfo = (errorInfoList) => {
     try {
       console.log('要上报的错误日志', errorInfoList);
       invariant(
         errorInfoList && errorInfoList.length > 0,
         '请传入要上报的错误日志'
       );
-      console.log('fetch', fetch);
-      // fetch(`${netConfig.requsetUrl}`, { method: 'get' });
+
       fetch(`${netConfig.requsetUrl}/api/v1/upload`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ errorInfo: errorInfoList })
-        // body: JSON.stringify({ name: 'gaohan' })
-      }).then(resposne => {
+        body: JSON.stringify({ errorInfo: errorInfoList }),
+      }).then((resposne) => {
         console.log('resposne: ', resposne);
         storage.clearStorage();
       });

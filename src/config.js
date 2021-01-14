@@ -14,7 +14,7 @@ const osInfo = [
   'MeeGo',
   'Symbian',
   'Chrome OS',
-  'WebOS'
+  'WebOS',
 ];
 
 const deviceInfo = ['Mobile', 'Tablet', 'iPad'];
@@ -61,14 +61,14 @@ const browserInfo = [
   'Weibo',
   'Douban',
   'Suning',
-  'iQiYi'
+  'iQiYi',
 ];
 
 /**
  *
  * @param {u} userAgent
  */
-const matchMap = function(u) {
+const matchMap = function (u) {
   return {
     // 内核
     Trident: u.indexOf('Trident') > -1 || u.indexOf('NET CLR') > -1,
@@ -96,7 +96,7 @@ const matchMap = function(u) {
     Iceape: u.indexOf('Iceape') > -1,
     SeaMonkey: u.indexOf('SeaMonkey') > -1,
     Epiphany: u.indexOf('Epiphany') > -1,
-    '360': u.indexOf('QihooBrowser') > -1 || u.indexOf('QHBrowser') > -1,
+    360: u.indexOf('QihooBrowser') > -1 || u.indexOf('QHBrowser') > -1,
     '360EE': u.indexOf('360EE') > -1,
     '360SE': u.indexOf('360SE') > -1,
     UC: u.indexOf('UC') > -1 || u.indexOf(' UBrowser') > -1,
@@ -138,44 +138,44 @@ const matchMap = function(u) {
     Mobile:
       u.indexOf('Mobi') > -1 || u.indexOf('iPh') > -1 || u.indexOf('480') > -1,
     Tablet: u.indexOf('Tablet') > -1 || u.indexOf('Nexus 7') > -1,
-    iPad: u.indexOf('iPad') > -1
+    iPad: u.indexOf('iPad') > -1,
   };
 };
 
-const matchOsVersion = function(u) {
+const matchOsVersion = function (u) {
   const osVersion = {
-    Windows: function() {
+    Windows: function () {
       const v = u.replace(/^.*Windows NT ([\d.]+);.*$/, '$1');
       const oldWindowsVersionMap = {
-        '6.4': '10',
-        '6.3': '8.1',
-        '6.2': '8',
-        '6.1': '7',
+        6.4: '10',
+        6.3: '8.1',
+        6.2: '8',
+        6.1: '7',
         '6.0': 'Vista',
-        '5.2': 'XP',
-        '5.1': 'XP',
-        '5.0': '2000'
+        5.2: 'XP',
+        5.1: 'XP',
+        '5.0': '2000',
       };
       return oldWindowsVersionMap[v] || v;
     },
-    Android: function() {
+    Android: function () {
       return u.replace(/^.*Android ([\d.]+);.*$/, '$1');
     },
-    iOS: function() {
+    iOS: function () {
       return u.replace(/^.*OS ([\d_]+) like.*$/, '$1').replace(/_/g, '.');
     },
-    Debian: function() {
+    Debian: function () {
       return u.replace(/^.*Debian\/([\d.]+).*$/, '$1');
     },
-    'Windows Phone': function() {
+    'Windows Phone': function () {
       return u.replace(/^.*Windows Phone( OS)? ([\d.]+);.*$/, '$2');
     },
-    'Mac OS': function() {
+    'Mac OS': function () {
       return u.replace(/^.*Mac OS X ([\d_]+).*$/, '$1').replace(/_/g, '.');
     },
-    WebOS: function() {
+    WebOS: function () {
       return u.replace(/^.*hpwOS\/([\d.]+);.*$/, '$1');
-    }
+    },
   };
   return osVersion;
 };
@@ -184,15 +184,15 @@ const matchOsVersion = function(u) {
  * 上传类型
  */
 const errorType = {
-  jsError: 'JS_ERROR'
+  jsError: 'JS_ERROR',
 };
 
 const netConfig = isProduction
   ? {
-      requsetUrl: 'http://127.0.0.1:7002'
+      requsetUrl: 'http://127.0.0.1:7001',
     }
   : {
-      requsetUrl: 'http://127.0.0.1:7002'
+      requsetUrl: 'http://127.0.0.1:7001',
     };
 
 export {
@@ -202,5 +202,5 @@ export {
   matchMap,
   matchOsVersion,
   errorType,
-  netConfig
+  netConfig,
 };

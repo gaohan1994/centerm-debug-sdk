@@ -1,4 +1,4 @@
-import deviceInfo from "./deviceInfo";
+import deviceInfo from './deviceInfo';
 /**
  * @todo [基类]
  *
@@ -20,7 +20,7 @@ class BaseComponent {
      * @param {appId} string;
      * @todo appId app唯一标识
      */
-    this.appId = "";
+    this.appId = '';
     /**
      * @param {url} string;
      * @todo 当前浏览器url
@@ -30,12 +30,12 @@ class BaseComponent {
      * @param {userId} string;
      * @todo 用户标识
      */
-    this.userId = "";
+    this.userId = '';
     /**
      * @param {pageKey} string;
      * @todo
      */
-    this.pageKey = "";
+    this.pageKey = '';
   }
 
   /**
@@ -66,7 +66,7 @@ class BaseComponent {
       deviceInfo: this.deviceInfo,
       happenTime: this.happenTime,
       appId: this.appId,
-      url: this.url
+      url: this.url,
     };
   };
 }

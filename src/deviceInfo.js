@@ -3,8 +3,8 @@ import {
   osInfo,
   deviceInfo,
   matchMap,
-  matchOsVersion
-} from "./config";
+  matchOsVersion,
+} from './config';
 class DeviceInfo {
   /**
    *Creates an instance of DeviceInfo.
@@ -24,13 +24,13 @@ class DeviceInfo {
      * 初始化引擎、浏览器、操作系统、设备信息
      */
     const { mode } = options;
-    this.mode = mode || "production";
+    this.mode = mode || 'production';
     this.navigator = (typeof window !== undefined && window.navigator) || {};
     this.infoMap = {
-      engine: ["WebKit", "Trident", "Gecko", "Presto"],
+      engine: ['WebKit', 'Trident', 'Gecko', 'Presto'],
       browser: browserInfo,
       os: osInfo,
-      device: deviceInfo
+      device: deviceInfo,
     };
 
     /**
@@ -48,7 +48,7 @@ class DeviceInfo {
     this.engine;
     this.browser;
     this.os;
-    this.device = "PC";
+    this.device = 'PC';
     this.version;
     this.orientationStatus;
     this.netWork;
@@ -59,11 +59,11 @@ class DeviceInfo {
   }
 
   isDevlopment = () => {
-    return this.mode === "development";
+    return this.mode === 'development';
   };
 
   isProduction = () => {
-    return this.mode === "production";
+    return this.mode === 'production';
   };
 
   getDeviceInfo() {
@@ -89,7 +89,7 @@ class DeviceInfo {
       language,
       userAgent,
       city,
-      ip
+      ip,
     };
   }
 
@@ -147,7 +147,7 @@ class DeviceInfo {
      */
     const userAgent = (this.navigator && this.navigator.userAgent) || {};
     const osVersion = matchOsVersion(userAgent);
-    const version = this.os ? osVersion[this.os]() : "";
+    const version = this.os ? osVersion[this.os]() : '';
     this.version = version;
   };
 
@@ -166,11 +166,11 @@ class DeviceInfo {
    * @memberof DeviceInfo
    */
   setOrientationStatus = () => {
-    const orientation = window.matchMedia("(orientation: portrait)");
+    const orientation = window.matchMedia('(orientation: portrait)');
     if (orientation.matches) {
-      this.orientationStatus = "竖屏";
+      this.orientationStatus = '竖屏';
     } else {
-      this.orientationStatus = "横屏";
+      this.orientationStatus = '横屏';
     }
   };
 
@@ -211,11 +211,11 @@ class DeviceInfo {
    */
   setLanguage = () => {
     const language = this.navigator.browserLanguage || this.navigator.language;
-    const languageArray = language.split("-");
+    const languageArray = language.split('-');
     if (languageArray[1]) {
       languageArray[1] = languageArray[1].toUpperCase();
     }
-    this.language = languageArray.join("_");
+    this.language = languageArray.join('_');
   };
 
   /**

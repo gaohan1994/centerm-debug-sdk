@@ -1,4 +1,4 @@
-import BaseComponent from "./baseComponent";
+import BaseComponent from './baseComponent';
 
 class JavascriptErrorInfo extends BaseComponent {
   constructor(errorType, errorMessage, errorStack) {
@@ -25,12 +25,12 @@ class JavascriptErrorInfo extends BaseComponent {
   getUploadErrorInfo = () => {
     const errorInfo = {
       errorMessage: this.errorMessage,
-      errorStack: this.errorStack
+      errorStack: this.errorStack,
     };
     const payload = {
       ...this.getBaseUploadErrorInfoPayload(),
       errorType: this.errorType,
-      errorInfo
+      errorInfo,
     };
     return payload;
   };

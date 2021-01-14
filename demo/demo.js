@@ -19,11 +19,11 @@ function Demo() {
   };
 
   return (
-    <div className='demo'>
-      <div className='demo-button' onClick={() => throwErorr()}>
+    <div className="demo">
+      <div className="demo-button" onClick={() => throwErorr()}>
         throw Error
       </div>
-      <div className='demo-button' onClick={() => upload()}>
+      <div className="demo-button" onClick={() => upload()}>
         upload
       </div>
     </div>
